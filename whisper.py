@@ -401,6 +401,10 @@ def exp_start(channel):
             return
         sleep(1)
 
+        while GPIO.input(channel) == 1:
+            sleep(2)
+            continue
+
 
 def exp_stop(channel):
     global process
