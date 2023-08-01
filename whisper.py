@@ -23,7 +23,6 @@ switch_hook_pin = 26
 api_key = "sk-..."
 filename = "audiocapture.wav"
 speech_key = "01...."
-service_region = "germanywestcentral"
 
 # Initialize process variable
 process = None
@@ -90,8 +89,8 @@ def voice_helper(pulse_count,generated_text, lang='en-US', gender='Female', name
     elif pulse_count == 0:
         generate_text_to_answer(generated_text, lang='en-AU', gender='Female', name='en-AU-KimNeural', style=None)
 
-def generate_text_to_speech(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None):
-    url = "https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1"
+def generate_text_to_speech(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None, service_region="germanywestcentral"):
+    url = "https://{}.tts.speech.microsoft.com/cognitiveservices/v1".format(service_region)
     headers = {
         "Ocp-Apim-Subscription-Key": "01ff10d899f5494abc7b0a114256b849",
         "Content-Type": "application/ssml+xml",
@@ -118,8 +117,8 @@ def generate_text_to_speech(generated_text, lang='en-US', gender='Female', name=
     else:
         print("Error:", response.status_code)
 
-def generate_text_to_answer(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None):
-    url = "https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1"
+def generate_text_to_answer(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None, service_region="germanywestcentral"):
+    url = "https://{}.tts.speech.microsoft.com/cognitiveservices/v1".format(service_region)
     headers = {
         "Ocp-Apim-Subscription-Key": "01ff10d899f5494abc7b0a114256b849",
         "Content-Type": "application/ssml+xml",
