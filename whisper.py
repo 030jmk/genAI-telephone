@@ -89,10 +89,10 @@ def voice_helper(pulse_count,generated_text, lang='en-US', gender='Female', name
     elif pulse_count == 0:
         generate_text_to_answer(generated_text, lang='en-AU', gender='Female', name='en-AU-KimNeural', style=None)
 
-def generate_text_to_speech(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None, service_region="germanywestcentral"):
+def generate_text_to_speech(generated_text, lang='en-US', gender='Female', name='en-US-JennyNeural', style=None, service_region="germanywestcentral", speech_key=speech_key):
     url = "https://{}.tts.speech.microsoft.com/cognitiveservices/v1".format(service_region)
     headers = {
-        "Ocp-Apim-Subscription-Key": "01ff10d899f5494abc7b0a114256b849",
+        "Ocp-Apim-Subscription-Key": speech_key,
         "Content-Type": "application/ssml+xml",
         "X-Microsoft-OutputFormat": "audio-16khz-64kbitrate-mono-mp3",
         "User-Agent": "curl"
