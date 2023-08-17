@@ -1,0 +1,12 @@
+[Unit]
+Description=GenAI Telephone Script using whisper and azure
+After=multi-user.target
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/jan/whisper-fast.py
+WorkingDirectory=/home/jan
+User=pi
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
