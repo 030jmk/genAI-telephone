@@ -1,0 +1,7 @@
+requests
+sounddevice
+scipy
+RPi.GPIO
+numpy
+unidecode
+flask
