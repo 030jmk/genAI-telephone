@@ -8,7 +8,6 @@ import threading
 import numpy as np
 import time as tm
 from time import sleep
-from unidecode import unidecode
 import csv
 import datetime
 import signal
