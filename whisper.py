@@ -15,6 +15,7 @@ import datetime
 import signal
 from flask import Flask, render_template, stream_with_context, request, Response
 import threading
+import os
 
 app = Flask(__name__)
 
@@ -45,7 +46,7 @@ reset_button_pin = 3
 switch_hook_pin = 26
 
 # Some Constants
-api_key = "SuperSecretAPIkey"
+api_key = os.environ.get('OPENAI_API_KEY')
 filename = "audiocapture.wav"
 
 # Initialize process variable
