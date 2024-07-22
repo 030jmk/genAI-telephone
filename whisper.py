@@ -2,7 +2,6 @@
 
 import subprocess
 import requests
-import sounddevice as sd
 from scipy.io.wavfile import write
 import RPi.GPIO as GPIO
 import threading
