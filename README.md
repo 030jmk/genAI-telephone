@@ -69,6 +69,22 @@ While waiting for an answer from the phone, elevator music may be used. "Yesterd
     
     https://pixabay.com/de/music/bossa-nova-yesterday-jazz-elevator-147660/
 
+Since it is likely that you would not want to have the API Keys as a string within the script, an evironmental variable may be set. On a rasperry pi this may look like this:
+1. Open the .bashrc File:
+```bash
+nano ~/.bashrc  
+```
+2. Add the Environment Variable by scrolling to the bottom of the file and adding the following line:
+```
+export OPENAI_API_KEY='your_api_key_here'  
+```
+3. Save and Close the File by pressing Ctrl + X to exit and pressing Y and ENTER to save the changes.
+4. Apply the Changes:
+```
+source ~/.bashrc 
+```
+
+
 
 ## Basic Storyline
 |    	| Sound           	| Story                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	| Activity 	|
