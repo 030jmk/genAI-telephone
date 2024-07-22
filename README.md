@@ -1,24 +1,23 @@
-# genAI-telephone
-A retrofitted rotary dial phone with speech-to-text, a generative pre-trained transformer and text-to-speech.
+# Random-Fact-Telephone
+A retrofitted rotary dial phone with text-to-speech, a generative pre-trained transformer to give listeners a LLM generated fact.
 
 
 ## Description
 
-The telephone is a fun project that utilizes a retrofitted rotary telephone as a tangible, tactile interface for artificial intelligence. Built upon technologies such as OpenAI’s Whisper API, which solves speech-to-text tasks, GPT-3.5, a fined-tuned version of the GPT3 (Generative Pre-Trained Transformer) model, Azure's Text to speech REST API, and a Raspberry Pi Zero W, 3b or 4.
+The telephone is a fun project that utilizes a retrofitted rotary telephone as a tangible, tactile interface for artificial intelligence. Built upon technologies such as OpenAI’s GPT3.5, OpenAI's Audio API, and a Raspberry Pi 3b+.
 
 ## Motivation
 
-The motivation behind GenAI-Telephone stemmed from a desire to diverge from traditional, screen-based interfaces that are the most familiar of digital interfaces in our modern lives. By repurposing a nostalgic rotary telephone, my goal is to invoke the past to interact with the technology of the present, allowing users to experience the capabilities of AI magic in a differntly engaging and refreshing manner. It is supposed to be a conversations starter on the topics of user interfaces, user experiences, AI safety, chat bots and their personas, as well as circularity of prototypes and demonstrators. 
+The motivation behind GenAI-Telephone stemmed from a desire to diverge from traditional, screen-based interfaces that are the most familiar of digital interfaces in our modern lives. By repurposing a nostalgic rotary telephone, my goal is to invoke the past to interact with the technology of the present, allowing users to experience the capabilities of AI magic in a differntly engaging and refreshing manner. It is supposed to be a conversations starter on the topics of user interfaces, user experiences, AI safety, chat bots and their personas, as well as circularity of prototypes and demonstrators.
 
 ## Dependencies (hardware and services)
 
-- OpenAI's Whisper API (alternative: ![self hosted whisper](https://github.com/openai/whisper)) and GPT-3.5 (alternative: llama2) for speech recognition and text generation
-- Azure's Text-To-Speech API for clear and natural language output (alternative: ![coqui TTS](https://github.com/coqui-ai/TTS))
-- Raspberry Pi Zero W or 3b and later
+- OpenAI API key for text generation and speech synthesis as a service
+- (optional) Azure's Text-To-Speech API for clear and natural language output (alternative: ![coqui TTS](https://github.com/coqui-ai/TTS))
+- Raspberry Pi Zero W, 3b and later
 - a rotary telephone
-- a microphone from an old headset
-- 2in1 mic/audio USB adapter
-- TRRS Audio Male to 4-Pin screw terminal
+- 3.5mm jack audio USB adapter
+- Audio Male to 2 or 3-Pin screw terminal
 - soldering iron
 
 ## Installation (Hardware)
@@ -46,23 +45,27 @@ The motivation behind GenAI-Telephone stemmed from a desire to diverge from trad
 
 ![blink](https://github.com/030jmk/genAI-telephone/assets/12104518/46dc766c-8c7d-4dc1-a9d2-a95cd705320e)
 
-- connect the cables of the handset to the TRRS Audio Male to 4-Pin screw terminal, plug the TRRS pin into the USB adapter and connect the adapter to the USB connection of the pi.
+- connect the cables of the handset to the Audio Pin screw terminal with the 3.5mm jack. Plug that into the Raspberry Pi 3b. Alternatively, plug the pin into the USB adapter and connect the adapter to the USB connection of the Raspberry Pi 4 or 5.
 - find the ground pins for the raspberry pi.
 - the rotary dial should be connected to GPIO pin 2
 - the black button should be connected to GPIO pin 3
 - the switch hook spring/button should be GPIO pin 26
 
 ## Dependencies (OS, Python)
-Once Raspian and the usual updates are installed using 
+Once Raspian and the general infrastructure is set up and the usual updates are installed using 
 
     sudo apt update && sudo apt -y upgrade
 the following dependencies should be installed:
 
     sudo apt install -y python3-pip python3-scipy python3-rpi.gpio sox gnuplot libsox-fmt-all ffmpeg libasound-dev libportaudio2 && pip install requests playsound numpy sounddevice Unidecode 
 
-test the mic set up once everything is connected:
+Copy the repo:
 
-    arecord -f cd -c 1 -r 44100 | sox -t raw -r 44100 -e signed -b 16 -c 1 -V - -t raw - | gnuplot -persist -e "set xlabel 'Time'; set ylabel 'Amplitude'; plot '-' with lines"
+```
+git clone -b Random-Fact-Telephone https://github.com/030jmk/genAI-telephone.git  
+
+```
+
 
 
 While waiting for an answer from the phone, elevator music may be used. "Yesterday (Jazz Elevator)" by Monument_Music is used for the current code:
@@ -82,6 +85,11 @@ export OPENAI_API_KEY='your_api_key_here'
 4. Apply the Changes:
 ```
 source ~/.bashrc 
+```
+
+To execute the script in the folder that was cloned from the repo
+```
+python whisper.py
 ```
 
 
