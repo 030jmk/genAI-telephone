@@ -59,6 +59,7 @@ def setup_gpio():
     GPIO.setup(reset_button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(pulse_input_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(switch_hook_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
     try:
         GPIO.add_event_detect(reset_button_pin, GPIO.FALLING, callback=reset_button_callback, bouncetime=300)
         GPIO.add_event_detect(pulse_input_pin, GPIO.FALLING, callback=pulse_detected, bouncetime=100)
@@ -135,53 +136,46 @@ def save_to_log(preprompt, answer=''):
 def exp_start(channel):
     global process, exp_started, pulse_count
     if channel == switch_hook_pin and not exp_started:
-        if GPIO.input(channel) == 0:
+        if GPIO.input(channel) == 1:  # Switch hook is pressed
             append_to_log("Call terminated")
             return
+        
+        exp_started = True
+        append_to_log("Call initiated")
+        
         subprocess.run(["play", "-q", "dual_tone.wav", "-t", "alsa"])
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
         generate_text_to_speech("Hello! If you would like to listen to a random fact, stay tuned.")
         subprocess.run(["play", "-q", "generated_answer.mp3", "-t", "alsa"])
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
+
         preprompt = f"You are an insightful fact bot. State a random fact or insightful piece of information that happened on this day. The current date is: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}. Please state an interesting fact from the depths of Wikipedia and pick a random article. The more random the better. In your response, stay on point, have a conversational tone, be precise and only give a maximum two-sentence answer. Add a fitting comment or retort, joke or dad-joke. Directly state the fact. Do not mention that you understand the request."
-        sleep(0.5)
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
+
         player = subprocess.Popen(["play", "-q", "yesterday-jazz-elevator-147660.mp3", "-t", "alsa"])
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
+        
         append_to_log("Sending prompt: State a random fact or insightful piece of information")
-        sleep(0.7)
         append_to_log("Requesting response")
-        sleep(0.7)
+
         generated_text = text_response_gpt(preprompt)
         print(generated_text)
         append_to_log(f"Response: {generated_text}")
         save_to_log(generated_text)
+
         append_to_log("Requesting text to natural speech conversion")
         generate_text_to_speech(generated_text)
-        sleep(0.7)
+
         append_to_log("Speech-to-Text playback")
         player.terminate()
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
+
         subprocess.run(["play", "-q", "generated_answer.mp3", "-t", "alsa"])
-        sleep(1)
         subprocess.run(["play", "-q", "Gassenbesetztton.wav", "-t", "alsa"])
-        if GPIO.input(channel) == 0:
-            append_to_log("Call terminated")
-            return
-        sleep(1)
+
+        append_to_log("Fact playback completed")
+        
+        # Wait for the switch hook to be released
+        while GPIO.input(channel) == 0:
+            sleep(0.1)
+        
+        exp_started = False
         append_to_log("Call terminated")
-        while GPIO.input(channel) == 1:
-            sleep(2)
 
 def exp_stop(channel):
     global process, exp_started
@@ -194,18 +188,18 @@ def main_loop():
     global process, exp_started
     try:
         while True:
-            if GPIO.input(switch_hook_pin) == False and exp_started == False:
-                sleep(2)
-            else:
+            if GPIO.input(switch_hook_pin) == 0 and not exp_started:  # Switch hook is unpressed
                 print("Switch hook un-pressed")
                 append_to_log("Call initiated")
                 exp_start(switch_hook_pin)
+            else:
+                sleep(0.5)
     except Exception as e:
         print(f"An error occurred: {str(e)}")
         generate_text_to_speech("I am sorry to inform you that something did not work quite right. I will have to restart the experience.")
         subprocess.run(["play", "-q", "generated_answer.mp3", "-t", "alsa"])
         print("Restarting...")
-        append_to_log("Restarting ...")
+        append_to_log("Restarting...")
         process = None
         exp_started = False
         pulse_count = 0
@@ -229,3 +223,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"Error in main loop: {e}")
         append_to_log(f"Error in main loop: {e}")
+        GPIO.cleanup()  # Cleanup all GPIO
