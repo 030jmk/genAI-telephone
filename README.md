@@ -72,6 +72,8 @@ While waiting for an answer from the phone, elevator music may be used. "Yesterd
     
     https://pixabay.com/de/music/bossa-nova-yesterday-jazz-elevator-147660/
 
+
+### Setting up an environmental variable for the API key
 Since it is likely that you would not want to have the API Keys as a string within the script, an evironmental variable may be set. On a rasperry pi this may look like this:
 1. Open the .bashrc File:
 ```bash
@@ -90,6 +92,24 @@ source ~/.bashrc
 To execute the script in the folder that was cloned from the repo
 ```
 python whisper.py
+```
+
+### Automated start and restart
+1. Copy the .service file to the systemd system directory:
+```
+sudo cp whisper.service /etc/systemd/system/
+```
+2. Reload the systemd daemon to recognize the new service file:
+```
+sudo systemctl daemon-reload
+```
+3. Enable the service to start on boot:
+```
+sudo systemctl enable whisper.service
+```
+4. Check the status of the service to ensure it's running:
+```
+sudo systemctl status whisper.service
 ```
 
 
