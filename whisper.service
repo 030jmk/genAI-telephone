@@ -3,8 +3,8 @@ Description=GenAI Telephone Script using whisper and azure
 After=multi-user.target
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/jan/whisper-fast.py
-WorkingDirectory=/home/jan
+ExecStart=/usr/bin/python3 /home/pi/whisper.py
+WorkingDirectory=/home/pi
 User=pi
 Restart=on-failure
 
