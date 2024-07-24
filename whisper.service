@@ -1,10 +1,10 @@
 [Unit]
-Description=GenAI Telephone Script using whisper and azure
+Description=Random facts from the telephone
 After=multi-user.target
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/pi/whisper.py
-WorkingDirectory=/home/pi
+ExecStart=/usr/bin/python3 /home/pi/genAI-telephone/whisper.py
+WorkingDirectory=/home/pi/genAI-telephone
 User=pi
 Restart=on-failure
 
