@@ -115,9 +115,8 @@ sudo systemctl status whisper.service
 
 
 ## In Action
-The demo was presented at [Berlin Hack & Tell #89](https://berlinhackandtell.rocks/2023-07-25-no89-camping-hacks) 2023-07-25 and can now be tested and seen at the PwC Experience Center in Berlin and Frankfurt.
+The demo can be tested at the PwC Experience Center in Berlin and Frankfurt.
 
-<img src="https://user-images.githubusercontent.com/12104518/258660552-dcf21ca2-a04a-49a1-97af-d41b795c0510.png" alt="colors" width="350"> <img src="https://user-images.githubusercontent.com/12104518/258660575-2870c7c1-7ac7-4cc0-963b-05ddde5aabd0.jpg" alt="colors" width="350">
 
 
 
