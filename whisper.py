@@ -86,10 +86,10 @@ def switch_hook_callback(channel):
         print("Switch hook replaced")
 
 # Helper functions
-def append_to_log(text, filename="log.txt"):
-    with open(filename, 'a') as file:
-        text = text.replace("\n", "")
-        file.write(f"{text}\n")
+def append_to_log(text, filename="log.txt"):  
+    with open(filename, 'a') as file:  
+        text = str(text).replace("\n", "")  
+        file.write(f"{text}\n")  
 
 def generate_text_to_speech(text, api_key=api_key, voice='alloy'):
     url = "https://api.openai.com/v1/audio/speech"
