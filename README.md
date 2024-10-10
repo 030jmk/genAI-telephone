@@ -57,7 +57,7 @@ Once Raspian and the general infrastructure is set up and the usual updates are 
     sudo apt update && sudo apt -y upgrade
 the following dependencies should be installed:
 
-    sudo apt install -y git python3-pip python3-scipy python3-numpy python3-rpi.gpio python3-flask sox gnuplot libsox-fmt-all ffmpeg libasound-dev libportaudio2 && pip install requests playsound numpy sounddevice Unidecode 
+    sudo apt install -y git python3-pip python3-scipy python3-numpy python3-rpi.gpio python3-flask python3-pyaudio python3-pydub sox gnuplot libsox-fmt-all ffmpeg libasound-dev libportaudio2 && pip install requests playsound numpy sounddevice Unidecode 
 
 Copy the repo:
 
